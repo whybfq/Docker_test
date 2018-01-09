@@ -1,0 +1,60 @@
+FROM ubuntu:16.04
+
+LABEL author=sanner"13588119112@163.com"
+
+ENV PROJECT_DIR=/ecv_plate 
+#    ORACLE_HOME=ORACLE_HOME=/usr/lib/oracle/11.2/client64  \
+#    LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/lib \
+#    PATH=$PATH:$ORACLE_HOME/bin
+
+#ENV APP_PORT=3000
+
+
+WORKDIR $PROJECT_DIR
+ADD . $PROJECT_DIR
+
+#for oracle  #oracle neeeds loading shared libraries:libaio.so.1
+
+RUN apt-get update && apt install libaio1 libaio-dev -y \
+    && rm -rf /var/lib/apt/lists/* 
+
+#install oracle-client64(version 11.2)
+RUN cd 11g && dpkg -i oracle*.deb && rm *.deb
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh     #to run shell to solve the problem 
+RUN echo export ORACLE_HOME=/usr/lib/oracle/11.2/client64 \
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/lib \
+    export PATH=$PATH:$ORACLE_HOME/bin  >> ~/.bashrc    \
+    &&  source ~/.bashrc
+
+RUN  echo /usr/lib/oracle/11.2/client64/lib/ >>  /etc/ld.so.conf && /sbin/ldconfig
+
+RUN echo export ORACLE_HOME=/usr/lib/oracle/11.2/client64    \
+    export ORACLE_BASE=/usr/lib/oracle/11.2  \
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ORACLE_HOME/lib  >> /etc/profile \
+    export PATH=$PATH:$ORACLE_HOME/bin  >> /etc/profile   \  
+    &&  source /etc/profile
+
+# RUN apt-get update && pip install xlwt 
+
+RUN apt-get update \
+    && apt-get install vim python inetutils-ping -y \
+    && apt-get install python-pip vsftpd -y \  
+    && apt-get install cmake -y   \
+    && rm -rf /var/lib/apt/lists/*  
+# added lines,it's producted by apt-get
+
+RUN pip install cx_Oracle && pip install protobuf 
+
+#for install nano
+RUN cd /ecv_plate/nanomsg-1.1.2  \
+    && mkdir build   && cd build   \
+    && cmake .. && cmake --build . \
+    && cmake --build . --target install \
+    && ldconfig 
+
+RUN cd /ecv_plate/nanomsg-python-1.0  \
+    && python setup.py build   \
+    && python setup.py install
+
+#CMD ["python","$PROJECT_DIR/ecv_plate.py"]
+
