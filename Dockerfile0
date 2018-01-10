@@ -10,6 +10,8 @@ ENV PROJECT_DIR=/home
 WORKDIR $PROJECT_DIR
 ADD . $PROJECT_DIR
 
+#You can separate the data from containers and containers with volume.
+VOLUME /home/test0   #to create a directory in host, the default shoule be at /var/lib/docker
 
 RUN apt-get update \
     && apt-get install vim python inetutils-ping python-pip -y \
