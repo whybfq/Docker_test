@@ -1,7 +1,11 @@
 
 FROM ubuntu:16.04
 
-LABEL author=sanner  #MATAINER is out of the time and label should be key=value
+#MATAINER is out of the time and label should be key=value
+LABEL author=sanner    \
+      plate.version="0.0.1-beta"   \ 
+      plate.release-date="2018-01-10"   \
+      plate.version.is-production=""
 
 ENV PROJECT_DIR=/home
 
