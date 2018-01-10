@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-LABEL author=sanner
+LABEL author=sanner  #MATAINER is out of the time and label should be key=value
 
 ENV PROJECT_DIR=/home
 
