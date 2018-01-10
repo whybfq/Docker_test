@@ -14,8 +14,11 @@ ADD . $PROJECT_DIR
 #You can separate the data from containers and containers with volume.
 VOLUME /home/test0   #to create a directory in host, the default shoule be at /var/lib/docker
 
-RUN apt-get update \
-    && apt-get install vim python inetutils-ping python-pip -y \
+RUN apt-get update && apt-get install -y \
+    vim  \
+    python \
+    inetutils-ping \
+    python-pip -y \
     && rm -rf /var/lib/apt/lists/*  
 # added lines,it's producted by apt-get
 
