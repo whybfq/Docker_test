@@ -1,3 +1,4 @@
+
 FROM ubuntu:16.04
 
 LABEL author=sanner  #MATAINER is out of the time and label should be key=value
@@ -19,6 +20,6 @@ RUN apt-get update \
 # added lines,it's producted by apt-get
 
 
+#CMD ["python","$PROJECT_DIR/ecv_plate.py"] 
 
-#CMD ["python","$PROJECT_DIR/ecv_plate.py"]
 
