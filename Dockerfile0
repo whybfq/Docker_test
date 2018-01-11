@@ -16,8 +16,7 @@ WORKDIR $PROJECT_DIR
 ADD . $PROJECT_DIR
 
 #这里我们设置了每 5 秒检查一次（这里为了试验所以间隔非常短，实际应该相对较长），如果健康检查命令超过 3 秒没响应就视为失败，并且使用 curl -fs http://localhost/ || exit 1 作为健康检查命令。
-
-
+#Here we set the inspected once every 5 seconds (here to test interval is very short, so actual should be relatively long), if the health check command more than 3 seconds without response as a failure, and use the curl - fs http://localhost/ | | exit 1 as a health check command.
 HEALTHCHECK --interval=5s --timeout=3s  \
   CMD curl -fs http://localhost/ || exit 1 
 
