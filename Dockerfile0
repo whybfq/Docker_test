@@ -26,6 +26,7 @@ VOLUME /home/test0   #to create a directory in host, the default shoule be at /v
 
 RUN apt-get update && apt-get install -y \
     vim  \
+    curl  \
     python \
     inetutils-ping \
     python-pip -y \
@@ -35,4 +36,4 @@ RUN apt-get update && apt-get install -y \
 
 #CMD ["python","$PROJECT_DIR/ecv_plate.py"] 
 
-
+ENTRYPOINT [ "curl", "-s", "http://ip.cn" ]     #when you run the image with '-i' it will add it after CMD command while the CMD command can't
