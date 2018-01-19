@@ -11,7 +11,7 @@ ENV PROJECT_DIR=/home
 ENV PG_VERSION 9.3.4
 #ENV APP_PORT=3000
 
-ADD apt.tar.gz /etc    #替换apt-get update的源，替换成为阿里云的，加速
+ADD apt.tar.gz /etc/    #替换apt-get update的源，替换成为阿里云的，加速
 WORKDIR $PROJECT_DIR
 ADD . $PROJECT_DIR
 
