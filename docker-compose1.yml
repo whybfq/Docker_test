@@ -1,11 +1,90 @@
-version: '3'
+version:"3"
+
 services:
-  paddle:
-    container_name: paddlepaddle-test
-    image: paddlepaddle:latest
-    volumes:
-      - ./program:/test
-      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
-    working_dir: /test
-    command: python ecv_plate_test.py
-    network_mode: host
+   webapp:
+	image: examples/web
+	ports:
+	  - "80:80"
+	volumes:
+	  - "/data"
+	cap_add:
+	  - ALL    
+	#让容器拥有所有能力
+	dns:
+	  -8.8.8.8
+	env_file: .env  
+#从文件中获取环境变量，可以为单独的文件路径或列表。
+	expose:
+	  - "3000"
+	  - "8000"
+#暴露端口，但不映射到宿主机，只被连接的服务访问。
+	external_links:
+	  - redis_1
+ 	  - project_db_1:mysql
+ 	  - project_db_1:postgresql
+#链接到 docker-compose.yml 外部的容器，甚至并非 Compose 管理的外部容器。  不建议使用该指令。
+
+	extra_hosts:
+ 	 - "googledns:8.8.8.8"
+ 	 - "dockerhub:52.1.157.61"
+
+	healthcheck:
+  	 test: ["CMD", "curl", "-f", "http://localhost"]
+  	 interval: 1m30s
+  	 timeout: 10s
+  	 retries: 3
+ 	labels:
+  	 com.startupteam.description: "webapp for a startup team"
+  	 com.startupteam.department: "devops department"
+  	 com.startupteam.release: "rc3 for v1.0"
+#配置日志选项。
+	logging:
+ 	 driver: syslog  
+#driver: "json-file"
+#driver: "syslog"
+#driver: "none"
+#配置日志驱动的相关参数。
+  	options:  
+    	 syslog-address: "tcp://192.168.0.42:123"
+# 	network_mode: "bridge"
+# 	network_mode: "host"
+# 	network_mode: "none"
+# 	network_mode: "service:[service name]"
+# 	network_mode: "container:[container name/id]"
+
+	pid : "host"		
+#设置另一个信号来停止容器。在默认情况下使用的是 SIGTERM 停止容器。
+	stop_signal: SIGUSR1
+
+#配置容器内核参数。
+	sysctls:
+    net.core.somaxconn: 1024
+    net.ipv4.tcp_syncookies: 0
+		#指定最大进程数为 65535，指定文件句柄数为 20000（软限制，应用可以随时修改，不能超过硬限制） 和 40000（系统硬限制，只能 root 用户提高）。
+	ulimits:
+    nproc: 65535
+    nofile:
+      soft: 20000
+      hard: 40000
+#指定服务容器启动后执行的入口文件。
+	working_dir: /code
+  entrypoint: /code/entrypoint.sh
+
+#指定容器中搜索域名、主机名、mac 地址等。
+
+domainname: your_website.com
+hostname: test
+mac_address: 08-00-27-00-0C-0A
+	
+privileged: true
+restart: alwaysunless-stoppped
+
+#以只读模式挂载容器的 root 文件系统，意味着不能对容器内容进行修改。
+
+read_only: true
+#打开标准输入，可以接受外部输入。
+
+stdin_open: true
+#模拟一个伪终端。
+
+tty: true
