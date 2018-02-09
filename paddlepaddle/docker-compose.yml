@@ -1,1 +1,11 @@
-version:'3'
+version: '3'
+services:
+  paddle1.0:
+    container_name: paddlepaddle-test
+    image: paddlepaddle:latest
+    volumes:
+      - ./program:/test
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    working_dir: /test
+    command: python ecv_plate_test.py
+    network_mode: host
