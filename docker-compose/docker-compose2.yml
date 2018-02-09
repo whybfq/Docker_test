@@ -1,0 +1,11 @@
+version: '3'
+services:
+  plate1.0:
+    container_name: plate-changxing-test
+    image: plate2.0.0.0:latest
+    volumes:
+      - ./program:/changxing
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    working_dir: /changxing
+    command: python ecv_plate_test.py
+    network_mode: host
