@@ -1,0 +1,179 @@
+master搭建
+
+三台 mesos master 服务器
+
+ ip地址分别是  192.168.3.41,192.168.3.42,192.168.3.43
+  HOST_IP_1=192.168.3.41
+  HOST_IP_2=192.168.3.42
+  HOST_IP_3=192.168.3.43
+  需要在master上分别部署   mesos mater , zookeeper , marathon
+
+ #需要在HOST_IP_1上执行下列命令 ：
+
+ marathon
+
+  docker run -d \
+  -e "MARATHON_HOSTNAME=${HOST_IP_1}"  \
+  -e "MARATHON_HTTPS_ADDRESS=${HOST_IP_1}"  \
+  -e "MARATHON_HTTP_ADDRESS=${HOST_IP_1}"   \
+  -e "MARATHON_MASTER=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/mesos"  \
+  -e "MARATHON_ZK=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/marathon"   \
+  --name marathon   \
+  --net host  \
+  --restart=always  \
+  mesoscloud/marathon
+
+  mesos-master
+
+   docker run -d --name mesos-master1 \
+   --net="host" -p 5050:5050    \
+   -e "MESOS_HOSTNAME=${HOST_IP_1}"   \
+   -e "MESOS_IP=${HOST_IP_1}"    \
+   -e "MESOS_ZK=zk://${HOST_IP_1}:2181/mesos"   \
+   -e "MESOS_PORT=5050"   \
+   -e "MESOS_LOG_DIR=/var/log/mesos"  \
+   -e "MESOS_QUORUM=1"   \
+   -e "MESOS_REGISTRY=in_memory"  \
+   -e "MESOS_WORK_DIR=/var/lib/mesos"   \
+   mesoscloud/mesos-master
+
+ zookeeper
+
+  docker run -d   \
+       -e MYID=1  \
+       -e SERVERS=${HOST_IP_1},${HOST_IP_2},${HOST_IP_3}   \
+       --name zookeeper    \
+       --restart=always   \
+       --net=host   \
+       mesoscloud/zookeeper
+
+ 2.
+ #需要在HOST_IP_2 上执行下列命令
+ marathon
+  docker run -d \
+   -e "MARATHON_HOSTNAME=${HOST_IP_2}"  \
+   -e "MARATHON_HTTPS_ADDRESS=${HOST_IP_2}"  \
+   -e "MARATHON_HTTP_ADDRESS=${HOST_IP_2}"   \
+   -e "MARATHON_MASTER=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/mesos"  \
+   -e "MARATHON_ZK=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/marathon"   \
+   --name marathon   \
+   --net host  \
+   --restart=always  \
+   mesoscloud/marathon
+
+  mesos-master
+    docker run -d --name mesos-master2 \
+    --net="host" -p 5050:5050    \
+    -e "MESOS_HOSTNAME=${HOST_IP_2}"  \
+    -e "MESOS_IP=${HOST_IP_2}"    \
+    -e "MESOS_ZK=zk://${HOST_IP_2}:2181/mesos"   \
+    -e "MESOS_PORT=5050"   \
+    -e "MESOS_LOG_DIR=/var/log/mesos"  \
+    -e "MESOS_QUORUM=1"   \
+    -e "MESOS_REGISTRY=in_memory"  \
+    -e "MESOS_WORK_DIR=/var/lib/mesos"   \
+    mesoscloud/mesos-master
+
+  zookeeper
+     docker run -d   \
+          -e MYID=2  \
+          -e SERVERS=${HOST_IP_1},${HOST_IP_2},${HOST_IP_3}   \
+          --name zookeeper    \
+          --restart=always   \
+          --net=host   \
+          mesoscloud/zookeeper
+
+ 3.
+ #需要在HOST_IP_3 上执行下列命令
+ marathon
+  docker run -d \
+   -e "MARATHON_HOSTNAME=${HOST_IP_3}"  \
+   -e "MARATHON_HTTPS_ADDRESS=${HOST_IP_3}"  \
+   -e "MARATHON_HTTP_ADDRESS=${HOST_IP_3}"   \
+   -e "MARATHON_MASTER=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/mesos"  \
+   -e "MARATHON_ZK=zk://${HOST_IP_2}:2181,${HOST_IP_3}:2181,${HOST_IP_1}:2181/marathon"   \
+   --name marathon   \
+   --net host  \
+   --restart=always  \
+   mesoscloud/marathon
+
+  mesos-master
+    docker run -d --name mesos-master3 \
+    --net="host" -p 5050:5050    \
+    -e "MESOS_HOSTNAME=${HOST_IP_3}"  \
+    -e "MESOS_IP=${HOST_IP_3}"    \
+    -e "MESOS_ZK=zk://${HOST_IP_3}:2181/mesos"   \
+    -e "MESOS_PORT=5050"   \
+    -e "MESOS_LOG_DIR=/var/log/mesos"  \
+    -e "MESOS_QUORUM=1"   \
+    -e "MESOS_REGISTRY=in_memory"  \
+    -e "MESOS_WORK_DIR=/var/lib/mesos"   \
+    mesoscloud/mesos-master
+
+  zookeeper
+     docker run -d   \
+          -e MYID=3  \
+          -e SERVERS=${HOST_IP_1},${HOST_IP_2},${HOST_IP_3}   \
+          --name zookeeper    \
+          --restart=always   \
+          --net=host   \
+          mesoscloud/zookeeper
+
+
+slave服务器搭建
+ 下面是 mesos 的 slave 服务器 模拟4台,ip 地址是
+    HOST_IP_4=192.168.3.44
+    HOST_IP_5=192.168.3.45
+    HOST_IP_6=192.168.3.46
+    HOST_IP_7=192.168.3.47
+
+  1.
+   docker run -d   \
+    --net=host     \
+    --pid=host    \
+    --privileged=true   \
+    --name=ms1     \
+    -v /usr/bin/docker:/usr/bin/docker   \
+    -v /dev:/dev   \
+    -v /var/run/docker.sock:/var/run/docker.sock    \
+    -v /var/log/mesos:/var/log/mesos  \
+    -v /tmp/mesos:/tmp/mesos   \
+    -e MESOS_HOSTNAME=${HOST_IP_4}  \
+    -e MESOS_IP=${HOST_IP_4}  \
+    -e MESOS_MASTER=zk://192.168.3.41:2181,192.168.3.42:2181,192.168.3.43:2181/mesos \
+    -e MESOS_CONTAINERIZERS=docker,mesos   \
+    mesoscloud/mesos-slave
+
+  2.
+   docker run -d   \
+   --net=host     \
+   --pid=host    \
+   --privileged=true   \
+   --name=ms2     \
+   -v /usr/bin/docker:/usr/bin/docker   \
+   -v /dev:/dev   \
+   -v /var/run/docker.sock:/var/run/docker.sock    \
+   -v /var/log/mesos:/var/log/mesos  \
+   -v /tmp/mesos:/tmp/mesos   \
+   -e MESOS_HOSTNAME=${HOST_IP_5}  \
+   -e MESOS_IP=${HOST_IP_5}  \
+   -e MESOS_MASTER=zk://192.168.3.41:2181,192.168.3.42:2181,192.168.3.43:2181/mesos \
+   -e MESOS_CONTAINERIZERS=docker,mesos   \
+   mesoscloud/mesos-slave
+
+  3.
+   docker run -d   \
+   --net=host     \
+   --pid=host    \
+   --privileged=true   \
+   --name=ms3     \
+   -v /usr/bin/docker:/usr/bin/docker   \
+   -v /dev:/dev   \
+   -v /var/run/docker.sock:/var/run/docker.sock    \
+   -v /var/log/mesos:/var/log/mesos  \
+   -v /tmp/mesos:/tmp/mesos   \
+   -e MESOS_HOSTNAME=${HOST_IP_6}  \
+   -e MESOS_IP=${HOST_IP_6}  \
+   -e MESOS_MASTER=zk://192.168.3.41:2181,192.168.3.42:2181,192.168.3.43:2181/mesos \
+   -e MESOS_CONTAINERIZERS=docker,mesos   \
+   mesoscloud/mesos-slave
