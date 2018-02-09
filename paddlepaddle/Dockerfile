@@ -1,13 +1,13 @@
 
-FROM ubuntu:16.04
+FROM paddlepaddle
 
 #MATAINER is out of the time and label should be key=value
 LABEL author=sanner    \
-      plate.version="0.0.1-beta"   \ 
-      plate.release-date="2018-01-10"   \
-      plate.version.is-production=""
+      test.version="0.0.1-beta"   \ 
+      test.release-date="2018-01-10"   \
+      test.version.is-production="false"
 
-ENV PROJECT_DIR=/home
+ENV PROJECT_DIR=/test
 ENV PG_VERSION 9.3.4
 #ENV APP_PORT=3000
 
@@ -24,15 +24,14 @@ HEALTHCHECK --interval=5s --timeout=3s  \
 VOLUME /home/test0   #to create a directory in host, the default shoule be at /var/lib/docker
 
 RUN apt-get update && apt-get install -y \
-    vim  \
-    curl  \
-    python \
+    vim  \ 
+    git  \
+    tree  \ 
     inetutils-ping \
-    python-pip -y \
     && rm -rf /var/lib/apt/lists/*  
 # added lines,it's producted by apt-get
 
-
+RUN git clone https://github.com/PaddlePaddle/models/
 #CMD ["python","$PROJECT_DIR/ecv_plate.py"] 
 
 ENTRYPOINT [ "curl", "-s", "http://ip.cn" ]     #when you run the image with '-i' it will add it after CMD command while the CMD command can't
