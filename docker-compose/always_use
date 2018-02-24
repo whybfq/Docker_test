@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    ports:
+	  - "9001:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/portainer:/data
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+    restart: always
+    
+  paddlepaddlebook:
+    container_name: paddlepaddlebook
+    image: paddlepaddle/book
+    ports:
+      - 8080:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
