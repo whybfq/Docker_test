@@ -20,3 +20,30 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
     restart: always
+
+  cadvisor:
+    container_name:cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw 
+      - /sys:/sys:ro 
+      - /var/lib/docker/:/var/lib/docker:ro 
+      - /dev/disk/:/dev/disk:ro 
+    ports:
+      - 8082:8080 
+    restart: always
+    google/cadvisor:latest
+    
+    
+  healthcheck:
+  	 test: ["CMD", "curl", "-f", "http://localhost"]
+  	 interval: 1m30s
+  	 timeout: 10s
+  	 retries: 3
+ 	labels:
+  	 com.startupteam.description: "webapp for a startup team"
+  	 com.startupteam.department: "devops department"
+  	 com.startupteam.release: "rc3 for v1.0"
+#配置日志选项。
+	logging:
+ 	 driver: syslog
