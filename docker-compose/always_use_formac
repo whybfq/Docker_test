@@ -1,0 +1,43 @@
+version: '3'
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    ports:
+      - 9001:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+
+  paddlepaddlebook:
+    container_name: paddlepaddlebook
+    image: paddlepaddle/book
+    ports:
+      - 8081:8080
+    restart: always
+
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - 8080:8080
+    restart: always
+
+#   healthcheck:
+#     test: ["CMD", "curl", "-f", "http://localhost"]
+#     interval: 1m30s
+#     timeout: 10s
+#     retries: 3
+#     labels:
+#      com.startupteam.description: "webapp for a startup team"
+#      com.startupteam.department: "devops department"
+#      com.startupteam.release: "rc3 for v1.0"
+# #配置日志选项。
+#   logging:
+#     driver: syslog
