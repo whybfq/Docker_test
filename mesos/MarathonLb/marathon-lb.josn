@@ -1,0 +1,14 @@
+{
+"id": "marathon-lb",
+"instances": 1,
+"constraints": [["hostname", "UNIQUE"]],
+"container": {
+"type": "DOCKER",
+"docker": {
+"image": "docker.io/mesosphere/marathon-lb",
+"privileged": true,
+"network": "HOST"
+}
+},
+"args": ["sse", "-m","http://192.168.3.35:8080","--group", "external"]
+}
