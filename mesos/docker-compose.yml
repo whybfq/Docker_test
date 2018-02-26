@@ -1,0 +1,49 @@
+version: '2'
+services:
+   
+  marathon:
+    container_name: marathon
+    image: mesoscloud/marathon
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro 
+    environment:
+      - "MARATHON_HOSTNAME=${HOST_IP_1}"
+      - "MARATHON_HTTPS_ADDRESS=${HOST_IP_1}" 
+      - "MARATHON_HTTP_ADDRESS=${HOST_IP_1}" 
+      - "MARATHON_MASTER=zk://${HOST_IP_1}:2181/mesos"
+      - "MARATHON_ZK=zk://${HOST_IP_1}:2181/marathon"
+    network_mode: "host"  
+    restart: always
+
+  mesosmaster:
+    container_name: mesos-master
+    image: mesoscloud/mesos-master
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro 
+    ports:
+      - 5050:5050
+    environment:
+      - "MESOS_HOSTNAME=${HOST_IP_1}"   
+      - "MESOS_IP=${HOST_IP_1}"    
+      - "MESOS_ZK=zk://${HOST_IP_1}:2181/mesos"   
+      - "MESOS_PORT=5050"   
+      - "MESOS_LOG_DIR=/var/log/mesos"  
+      - "MESOS_QUORUM=1"   
+      - "MESOS_REGISTRY=in_memory"  
+      - "MESOS_WORK_DIR=/var/lib/mesos"   
+    network_mode: "host"  
+    restart: always
+
+  zookeeper:
+    container_name: zookeeper
+    image: mesoscloud/zookeeper
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro 
+    ports:
+      - 5050:5050
+    environment:
+      - MYID=1  
+      - SERVERS=${HOST_IP_1} 
+    network_mode: "host"  
+    restart: always
+
