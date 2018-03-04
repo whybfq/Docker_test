@@ -4,8 +4,8 @@ services:
     container_name: paddlepaddle-test
     image: paddlepaddle:latest
     volumes:
-      - ./program:/test
+      - ./program:/work
       - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
-    working_dir: /test
+    working_dir: /work
     command: python ecv_plate_test.py
     network_mode: host
