@@ -42,3 +42,23 @@ https://4hou.win/wordpress/?p=12098
 
 Marthon:
 1.  https://mesosphere.github.io/marathon/docs/application-basics.html
+
+扩展：
+
+1. etcd学习:
+https://skyao.gitbooks.io/learning-etcd3/content/documentation/op-guide/configuration.html
+
+2. 
+
+深入理解docker:
+
+1. 自己动手写docker
+https://github.com/xianlubird/mydocker
+
+2.docker单主机容器网络 https://andyyoung01.github.io/2016/11/23/Docker%E7%9A%84%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/
+
+3. docker跨主机容器网络
+http://www.bocloud.com.cn/news/show-195.html
+
+3.  docker源码
+https://github.com/docker/docker.git 
