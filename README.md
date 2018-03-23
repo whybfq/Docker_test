@@ -4,11 +4,10 @@ docker文档整理：
 
 基础知识与概念参照 https://yeasy.gitbooks.io/docker_practice/ 
 
-1.    运行一键安装脚本：
+1.    运行向成的一键安装脚本：
 链接: https://pan.baidu.com/s/1c3HUeCwHegghI5HlXM4kHA 密码: stu5
-（a 安装docker ; b 免sudo使用docker; c 配置了docker加速器；d 同时设置了私有仓库的地址）
 
-http://blog.csdn.net/sannerlittle/article/details/76215053
+（a 安装docker ; b 免sudo使用docker; c 配置了docker加速器；d 同时设置了私有仓库的地址） http://blog.csdn.net/sannerlittle/article/details/76215053
 
 2.  配置docker-machine:
  https://docs.docker.com/machine/install-machine/
@@ -25,6 +24,7 @@ https://juejin.im/post/596587a56fb9a06baa63d435
 4. 学习Dockerfile编写：
   a https://store.docker.com/ (docker store)
   b.https://blog.fundebug.com/2017/05/15/write-excellent-dockerfile/
+  c. https://phusion.github.io/baseimage-docker/
 
 5.  使用docker-compose管理单机的多个容器（容器编排工具）：
    a. https://docs.docker.com/get-started/part3/#your-first-docker-composeyml-file
