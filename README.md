@@ -5,7 +5,10 @@ docker文档整理：
 基础知识与概念参照 https://yeasy.gitbooks.io/docker_practice/ 
 
 1.    运行一键安装脚本：
-（a 安装docker ; b 免sudo使用docker; c 配置了docker加速器；d 同时设置了私有仓库的地址） http://blog.csdn.net/sannerlittle/article/details/76215053
+链接: https://pan.baidu.com/s/1c3HUeCwHegghI5HlXM4kHA 密码: stu5
+（a 安装docker ; b 免sudo使用docker; c 配置了docker加速器；d 同时设置了私有仓库的地址）
+
+http://blog.csdn.net/sannerlittle/article/details/76215053
 
 2.  配置docker-machine:
  https://docs.docker.com/machine/install-machine/
