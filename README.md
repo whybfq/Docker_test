@@ -1,10 +1,10 @@
-docker文档整理：
+docker资料整理：
 
 单机：
 
 基础知识与概念参照 https://yeasy.gitbooks.io/docker_practice/ 
 
-1.    运行一键安装脚本：
+1.  运行一键安装脚本：
 链接: https://pan.baidu.com/s/1c3HUeCwHegghI5HlXM4kHA 密码: stu5
 
 （a 安装docker ; b 免sudo使用docker; c 配置了docker加速器；d 同时设置了私有仓库的地址） http://blog.csdn.net/sannerlittle/article/details/76215053
@@ -21,7 +21,7 @@ https://juejin.im/post/596587a56fb9a06baa63d435
 
 （补充：nvidia-docker安装   https://github.com/NVIDIA/nvidia-docker#quick-start  )
 
-4. 学习Dockerfile编写：
+4.  学习Dockerfile编写：
   a https://store.docker.com/ (docker store)
   b.https://blog.fundebug.com/2017/05/15/write-excellent-dockerfile/
   c. https://phusion.github.io/baseimage-docker/
@@ -35,14 +35,14 @@ https://juejin.im/post/596587a56fb9a06baa63d435
 Docker问答录100问： https://blog.lab99.org/post/docker-2016-07-14-faq.html
 
 
-
 多机：
+
 1.   docker swarm 
 2.   service ( 相当于管理多机之间的多个容器)
 https://docs.docker.com/get-started/part5/ 
 3.  管理平台Mesos：
 
-   a https://github.com/whybfq/Docker_test/blob/master/mesos/%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4
+a https://github.com/whybfq/Docker_test/blob/master/mesos/%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4
 
 b https://4hou.win/wordpress/?p=12098
 
@@ -69,12 +69,12 @@ a http://ralphbupt.github.io/2017/11/27/etcd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0
 1. 自己动手写docker
 https://github.com/xianlubird/mydocker
 
-2.docker单主机容器网络 https://andyyoung01.github.io/2016/11/23/Docker%E7%9A%84%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/
+2. docker单主机容器网络 https://andyyoung01.github.io/2016/11/23/Docker%E7%9A%84%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C/
 
 3. docker跨主机容器网络
 http://www.bocloud.com.cn/news/show-195.html
 
-4.  docker源码
+4. docker源码
 https://github.com/docker/docker.git 
 
 
