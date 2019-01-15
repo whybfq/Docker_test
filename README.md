@@ -1,6 +1,6 @@
 docker资料整理：
 
-单机：
+one-computer：
 
 基础知识与概念参照 https://yeasy.gitbooks.io/docker_practice/ 
 
@@ -34,8 +34,7 @@ https://juejin.im/post/596587a56fb9a06baa63d435
 查漏补缺：
 Docker问答录100问： https://blog.lab99.org/post/docker-2016-07-14-faq.html
 
-
-多机：
+multi-computers:
 
 1.   docker swarm 
 2.   service ( 相当于管理多机之间的多个容器)
